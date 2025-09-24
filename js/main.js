@@ -1,13 +1,13 @@
 /**
- * Main JavaScript for the SPIF Website (Calm & Content-Rich Design).
+ * Main JavaScript for the SPIF Website (Performance & Mobile-First).
  *
- * This script handles the following functionalities:
- * 1. Sticky Header on scroll.
+ * This script is dependency-free and handles:
+ * 1. High-Performance Sticky Header using Intersection Observer.
  * 2. Light/Dark Theme Toggle with localStorage persistence.
- * 3. Mobile Navigation Toggle.
- * 4. Scroll-triggered animations using Intersection Observer.
+ * 3. Robust Mobile Navigation overlay.
+ * 4. Efficient Scroll-triggered animations.
  * 5. Animated number counters.
- * 6. Initialization for Swiper.js carousels.
+ * 6. Controls for the CSS Testimonial Carousel.
  */
 
 'use strict';
@@ -15,22 +15,26 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /**
-     * 1. STICKY HEADER
-     * Adds a class to the header when the user scrolls down slightly.
+     * 1. STICKY HEADER (PERFORMANCE-OPTIMIZED)
+     * Uses Intersection Observer to toggle the sticky class. This is far more
+     * performant than using a 'scroll' event listener.
      */
     const initStickyHeader = () => {
         const header = document.querySelector('#page-header-inner');
-        if (!header) return;
+        const sentinel = document.querySelector('#header-observer-sentinel');
 
-        const stickyPoint = 10; // Trigger effect almost immediately
+        if (!header || !sentinel) return;
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > stickyPoint) {
-                header.classList.add('is-sticky');
-            } else {
-                header.classList.remove('is-sticky');
-            }
+        const observer = new IntersectionObserver((entries) => {
+            // entry.isIntersecting is true when the sentinel is in view.
+            // We want the header to be sticky when the sentinel is *out of view*.
+            header.classList.toggle('is-sticky', !entries[0].isIntersecting);
+        }, {
+            root: null, // observes intersections relative to the viewport
+            threshold: 0,
         });
+
+        observer.observe(sentinel);
     };
 
     /**
@@ -41,19 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeToggleButton = document.getElementById('theme-toggle');
         if (!themeToggleButton) return;
 
-        // Function to apply the selected theme
         const applyTheme = (theme) => {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
         };
 
-        // Determine the initial theme
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = storedTheme ? storedTheme : (systemPrefersDark ? 'dark' : 'light');
         applyTheme(initialTheme);
 
-        // Add click event listener to the toggle button
         themeToggleButton.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -63,19 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 3. MOBILE NAVIGATION
-     * Toggles the mobile menu when the hamburger icon is clicked.
+     * Toggles a full-screen overlay menu for a clean mobile experience.
      */
     const initMobileNav = () => {
         const menuToggle = document.querySelector('#page-open-mobile-menu');
         if (!menuToggle) return;
         
-        // Check if mobile menu container exists, if not, create it
+        // Dynamically create the mobile menu from the desktop navigation HTML
+        // This avoids duplicating menu code in the HTML.
         let mobileMenu = document.querySelector('#page-mobile-main-menu');
         if (!mobileMenu) {
             mobileMenu = document.createElement('div');
             mobileMenu.id = 'page-mobile-main-menu';
-            document.body.appendChild(mobileMenu);
-
+            
             const desktopNav = document.querySelector('.navigation .menu__container');
             if (desktopNav) {
                 mobileMenu.innerHTML = `<div class="page-mobile-menu-content">${desktopNav.outerHTML}</div>`;
@@ -83,12 +84,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const closeButton = document.createElement('button');
             closeButton.className = 'page-close-mobile-menu';
-            closeButton.innerHTML = '&times;';
+            closeButton.innerHTML = '<span class="material-symbols-outlined">close</span>';
             closeButton.setAttribute('aria-label', 'Close menu');
             mobileMenu.prepend(closeButton);
+            
+            document.body.appendChild(mobileMenu);
 
             closeButton.addEventListener('click', () => {
                 document.body.classList.remove('mobile-menu-is-open');
+            });
+
+            // Add event listener to close menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.body.classList.remove('mobile-menu-is-open');
+                });
             });
         }
 
@@ -97,10 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-
     /**
      * 4. SCROLL-TRIGGERED ANIMATIONS
-     * Uses Intersection Observer to add an 'is-animated' class to elements.
+     * Efficiently adds an 'is-animated' class to elements as they enter the viewport.
      */
     const initScrollAnimations = () => {
         const animatedElements = document.querySelectorAll('.scroll-animate');
@@ -110,11 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-animated');
-                    observer.unobserve(entry.target);
+                    observer.unobserve(entry.target); // Animate only once
                 }
             });
         }, {
-            threshold: 0.1
+            threshold: 0.1 // Trigger when 10% of the element is visible
         });
 
         animatedElements.forEach(el => observer.observe(el));
@@ -122,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 5. ANIMATED NUMBER COUNTERS
-     * Animates numbers when they scroll into view.
+     * Animates numbers in the impact section when they scroll into view.
      */
     const initCounters = () => {
         const counters = document.querySelectorAll('.impact-card__number');
@@ -134,75 +143,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     const counter = entry.target;
                     const targetText = counter.innerText;
                     const target = parseInt(targetText.replace(/[^0-9]/g, ''), 10);
-                    const suffix = targetText.replace(/[0-9,]/g, '');
+                    const suffix = targetText.replace(/[0-9,]/g, '') || '';
 
-                    let current = 0;
+                    counter.innerText = '0'; // Start count from 0
+                    
                     const duration = 2000; // 2 seconds
-                    const increment = target / (duration / 16);
+                    let startTime = null;
 
-                    const updateCount = () => {
-                        current += increment;
-                        if (current < target) {
-                            counter.innerText = Math.ceil(current).toLocaleString();
-                            requestAnimationFrame(updateCount);
+                    const step = (timestamp) => {
+                        if (!startTime) startTime = timestamp;
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
+                        const current = Math.floor(progress * target);
+                        counter.innerText = current.toLocaleString();
+                        if (progress < 1) {
+                            requestAnimationFrame(step);
                         } else {
                             counter.innerText = target.toLocaleString() + suffix;
                         }
                     };
-                    requestAnimationFrame(updateCount);
+                    requestAnimationFrame(step);
                     
-                    observer.unobserve(counter);
+                    observer.unobserve(counter); // Count up only once
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.5 }); // Trigger when 50% of the element is visible
         
         counters.forEach(counter => observer.observe(counter));
     };
 
     /**
-     * 6. SWIPER.JS CAROUSEL INITIALIZATION
+     * 6. TESTIMONIAL CAROUSEL CONTROLS
+     * Provides functionality for the next/prev buttons on the CSS-based carousel.
      */
-    const initCarousels = () => {
-        if (typeof Swiper === 'undefined') {
-            console.warn('Swiper library is not loaded. Carousels will not work.');
-            return;
-        }
+    const initTestimonialCarousel = () => {
+        const track = document.querySelector('.carousel-track');
+        const nextButton = document.getElementById('testimonial-next');
+        const prevButton = document.getElementById('testimonial-prev');
 
-        // Testimonials Carousel
-        new Swiper('.tm-testimonial', {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                768: { slidesPerView: 2 },
-            }
-        });
+        if (!track || !nextButton || !prevButton) return;
 
-        // Clients & Media Logos Carousel
-        new Swiper('.tm-logo-carousel', {
-            loop: true,
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            slidesPerView: 2,
-            spaceBetween: 40,
-            breakpoints: {
-                576: { slidesPerView: 3 },
-                768: { slidesPerView: 4 },
-                992: { slidesPerView: 5 },
-            }
-        });
+        const scrollCarousel = (direction) => {
+            const slide = track.querySelector('.carousel-slide');
+            if (!slide) return;
+            const scrollAmount = slide.offsetWidth * direction;
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        };
+
+        nextButton.addEventListener('click', () => scrollCarousel(1));
+        prevButton.addEventListener('click', () => scrollCarousel(-1));
     };
 
 
-    // --- Initialize all modules ---
+    // --- Initialize all modules on page load ---
     initStickyHeader();
     initThemeToggle();
     initMobileNav();
     initScrollAnimations();
     initCounters();
-    initCarousels();
+    initTestimonialCarousel();
 
 });

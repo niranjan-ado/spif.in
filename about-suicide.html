@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Suicide – SPIF</title>
+    
+    <!-- Google Fonts: Inter for Body, Lora for Headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- Google Material Symbols (for icons) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <!-- Your SHARED Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="page" class="site">
+        <!-- ======================= HEADER (CONSISTENT ACROSS SITE) ======================= -->
+        <header id="page-header-inner" class="page-header">
+            <div class="container">
+                <div class="header-wrap">
+                    <a href="/" class="branding__logo">
+                        <img src="assets/images/logos/spif-logo-light.png" alt="SPIF Logo" class="logo-light">
+                        <img src="assets/images/logos/spif-logo-dark.png" alt="SPIF Logo" class="logo-dark">
+                    </a>
+                    <nav class="navigation">
+                        <ul class="menu__container">
+                            <li><a href="index.html#get-trained">Online Training</a></li>
+                            <li><a href="#">Become an Instructor</a></li>
+                            <li><a href="#resources">Resources</a></li>
+                            <li><a href="index.html#about-us">About SPIF</a></li>
+                        </ul>
+                    </nav>
+                    <div class="header-right">
+                        <a class="tm-button button-secondary" href="#">Donate</a>
+                        <button class="theme-toggle" id="theme-toggle" title="Toggle light/dark mode">
+                            <span class="material-symbols-outlined theme-icon-dark">dark_mode</span>
+                            <span class="material-symbols-outlined theme-icon-light">light_mode</span>
+                        </button>
+                        <button id="page-open-mobile-menu" class="page-open-mobile-menu" aria-label="Open menu">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Observer Target for High-Performance Sticky Header -->
+        <div id="header-observer-sentinel"></div>
+
+        <!-- ======================= MAIN CONTENT ======================= -->
+        <main id="page-content" class="page-content">
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="container">
+                    <div class="hero-content scroll-animate">
+                        <h1 class="hero__title">Know Suicide, <span class="highlight">No Suicide</span>.</h1>
+                        <p class="hero__subtitle">Anyone can prevent suicide by learning to recognize the warning signs and how to offer support.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Statistics Section -->
+            <section class="section stats-section scroll-animate">
+                <div class="container">
+                    <div class="card-grid-2col">
+                        <div class="stat-card card">
+                            <h2 class="stat-card__title">1 Indian Every 3 Minutes</h2>
+                            <p>With over 164,000 suicides annually, India is the country with the most suicides globally. The World Health Organisation estimates this number could be even higher.</p>
+                        </div>
+                        <div class="stat-card card">
+                             <h2 class="stat-card__title">8 out of 10 People Show Signs</h2>
+                            <p>Suicide is the most preventable form of death. As a community, we can play a vital role by learning the verbal, non-verbal, and written warning signs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Suicide Causes Section -->
+            <section id="causes" class="section causes-section scroll-animate">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Understanding Suicide</h2>
+                        <p class="section-subtitle">Suicide is a desperate attempt to escape suffering that feels unbearable. It rarely results from a single cause but rather when multiple life stressors create overwhelming feelings of hopelessness.</p>
+                    </div>
+                    <div class="card-grid-3col">
+                        <div class="cause-card card"><h4>Mental Health</h4><p>Mood, conduct, or personality disorders, often undiagnosed or untreated.</p></div>
+                        <div class="cause-card card"><h4>Social & Cultural</h4><p>Isolation, stigma, and discrimination based on gender, sexuality, or caste.</p></div>
+                        <div class="cause-card card"><h4>Environmental</h4><p>Access to lethal means, neglect, abuse, and personal or societal trauma.</p></div>
+                        <div class="cause-card card"><h4>Lifestyle</h4><p>Substance abuse, chronic lack of sleep, and unhealthy body image issues.</p></div>
+                        <div class="cause-card card"><h4>Physical Health</h4><p>Traumatic brain injury, chronic debilitating pain, or disease.</p></div>
+                        <div class="cause-card card"><h4>Precipitating Events</h4><p>Traumatic changes in relationships or sudden distressing life events.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Warning Signs Section -->
+            <section class="section warning-signs-section scroll-animate" style="background-color: var(--color-surface);">
+                <div class="container">
+                    <div class="section-header"><h2 class="section-title">Warning Signs</h2></div>
+                    <div class="card-grid-3col">
+                        <div class="sign-category">
+                            <h3>Verbal Cues</h3>
+                            <ul>
+                                <li>Talking about wanting to die or kill themselves.</li>
+                                <li>Expressing feelings of unbearable pain.</li>
+                                <li>Saying things like "My family would be better off without me."</li>
+                                <li>Mentioning they "won't be around much longer."</li>
+                            </ul>
+                        </div>
+                        <div class="sign-category">
+                            <h3>Behavioural Cues</h3>
+                            <ul>
+                                <li>Increased drug or alcohol abuse.</li>
+                                <li>Sleeping too much or too little.</li>
+                                <li>Isolating from friends and family.</li>
+                                <li>Giving away prized possessions.</li>
+                                <li>Unexplained anger or irritability.</li>
+                            </ul>
+                        </div>
+                        <div class="sign-category">
+                            <h3>Emotional Cues</h3>
+                            <ul>
+                                <li>Sudden and extreme mood swings.</li>
+                                <li>Expressing hopelessness, helplessness, or worthlessness.</li>
+                                <li>Feeling trapped or like a burden to others.</li>
+                                <li>Loss of interest in activities once enjoyed.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Protective Factors Section -->
+            <section class="section protective-factors-section scroll-animate">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Protective Factors</h2>
+                        <p class="section-subtitle">While risk factors exist, there are also many factors that offer a safety net. Suicide prevention seeks to reduce risks and increase these protections.</p>
+                        <ul>
+                            <li>✅ Strong social connections to friends and family.</li>
+                            <li>✅ Life skills such as emotional resilience and problem-solving.</li>
+                            <li>✅ A sense of purpose or meaning in life.</li>
+                            <li>✅ Cultural or religious beliefs that discourage suicide.</li>
+                            <li>✅ Access to quality mental health services and support.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources" class="section cta-links-section scroll-animate">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Become a Mental Health Advocate</h2>
+                        <p class="section-subtitle">Educate yourself and support the cause to help us spread awareness and save lives.</p>
+                    </div>
+                    <div class="card-grid-4col">
+                        <a href="#" class="card-link"><div class="card">
+                            <span class="material-symbols-outlined card-icon">menu_book</span><h3>Visit our Blog</h3>
+                        </div></a>
+                        <a href="#" class="card-link"><div class="card">
+                             <span class="material-symbols-outlined card-icon">verified_user</span><h3>Become a Gatekeeper</h3>
+                        </div></a>
+                        <a href="#" class="card-link"><div class="card">
+                             <span class="material-symbols-outlined card-icon">volunteer_activism</span><h3>Donate</h3>
+                        </div></a>
+                        <a href="#" class="card-link"><div class="card">
+                            <span class="material-symbols-outlined card-icon">help_center</span><h3>View FAQs</h3>
+                        </div></a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <!-- ======================= FOOTER (CONSISTENT ACROSS SITE) ======================= -->
+        <footer class="page-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Seek Help</h4>
+                        <ul>
+                            <li><a href="#">As an Individual</a></li>
+                            <li><a href="#">At your College</a></li>
+                            <li><a href="#">At your Workplace</a></li>
+                            <li><a href="#">As a Mental Health Professional</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">QPR Solutions</h4>
+                        <ul>
+                            <li><a href="#">QPR Gatekeeper Training</a></li>
+                            <li><a href="#">QPR Instructor Training</a></li>
+                            <li><a href="#">QPR Advanced Training</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Get Involved</h4>
+                        <ul>
+                            <li><a href="#">Donate</a></li>
+                            <li><a href="#">Become a Gatekeeper</a></li>
+                            <li><a href="#">Organize a Workshop</a></li>
+                            <li><a href="#">Work with Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-col__title">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook">FB</a>
+                            <a href="#" aria-label="Instagram">IG</a>
+                            <a href="#" aria-label="LinkedIn">LI</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; Suicide Prevention India Foundation 2025. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Your SHARED JavaScript -->
+    <script src="js/main.js" defer></script>
+</body>
+</html>
